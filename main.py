@@ -11,25 +11,46 @@ import random
 # fix issue where what if option a and b are the same
 option_a = random.choice(game_data)
 option_b = random.choice(game_data)
+player_life = 1
+score = 0
 
 print(f"\nCompare A: {option_a['name']}, a {option_a['description']}, from {option_a['country']}\n")
 print("Vs.\n")
 print(f"Compare B: {option_b['name']}, a {option_b['description']}, from {option_b['country']}\n")
 
-print(f"option_a: {option_a['follower_count']}")
-print(f"option_b: {option_b['follower_count']}")
+# print(f"option_a: {option_a['follower_count']}")
+# print(f"option_b: {option_b['follower_count']}")
 
 def check_higher(a, b):
     return "a" if a['follower_count'] > b['follower_count'] else "b"
 
-player_choice = input("Who has more followers? Type 'A' or 'B': ").lower()
+while player_life > 0:
+    answer = check_higher(option_a, option_b)
+    player_choice = input("Who has more followers? Type 'A' or 'B': ").lower()
 
-answer = check_higher(option_a, option_b)
+    if player_choice == answer:
+        if player_choice == "a":
+            score += 1
+            print(f"You are right! Current score: {score}\n")
 
-if player_choice == answer:
-    print("correct")
-else:
-    print("wrong")
+            option_b = random.choice(game_data)
+            print(f"\nCompare A: {option_a['name']}, a {option_a['description']}, from {option_a['country']}\n")
+            print("Vs.\n")
+            print(f"Compare B: {option_b['name']}, a {option_b['description']}, from {option_b['country']}\n")
+        else:
+            score += 1
+            print(f"You are right! Current score: {score}\n")
+
+            option_a = option_b
+            option_b = random.choice(game_data)
+            print(f"\nCompare A: {option_a['name']}, a {option_a['description']}, from {option_a['country']}\n")
+            print("Vs.\n")
+            print(f"Compare B: {option_b['name']}, a {option_b['description']}, from {option_b['country']}\n")
+    else:
+        player_life -= 1
+        break
+
+print(f"Sorry, your answer is wrong.\nTotal score: {score}")
 
     # {
     #     'name': 'Instagram',
