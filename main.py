@@ -1,4 +1,5 @@
 from data import game_data
+from art import logo
 import random
 
 # compare two data
@@ -6,7 +7,7 @@ import random
 # if wrong, game over
 # if right, the correct answer stays and will be against a new data
 
-# art here
+print(logo)
 
 # fix issue where what if option a and b are the same
 option_a = random.choice(game_data)
