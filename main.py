@@ -2,60 +2,61 @@ from data import game_data
 from art import logo
 import random
 
-# compare two data
-# make the user choose which one is bigger
-# if wrong, game over
-# if right, the correct answer stays and will be against a new data
-
 print(logo)
 
-# fix issue where what if option a and b are the same
-option_a = random.choice(game_data)
-option_b = random.choice(game_data)
-player_life = 1
-score = 0
-
-print(f"\nCompare A: {option_a['name']}, a {option_a['description']}, from {option_a['country']}\n")
-print("Vs.\n")
-print(f"Compare B: {option_b['name']}, a {option_b['description']}, from {option_b['country']}\n")
-
-# print(f"option_a: {option_a['follower_count']}")
-# print(f"option_b: {option_b['follower_count']}")
+OPTION_A = random.choice(game_data) # not really constants, but just to know that they are globals
+OPTION_B = random.choice(game_data)
+PLAYER_LIFE = 1
+SCORE = 0
 
 def check_higher(a, b):
+    """Returns which option is higher."""
     return "a" if a['follower_count'] > b['follower_count'] else "b"
 
-while player_life > 0:
-    answer = check_higher(option_a, option_b)
-    player_choice = input("Who has more followers? Type 'A' or 'B': ").lower()
+def is_the_same(a, b):
+    """Checks if the options are the same and changes OPTION_B if they are."""
+    while a == b:
+        b = random.choice(game_data)
+    return b
 
-    if player_choice == answer:
-        if player_choice == "a":
-            score += 1
-            print(f"You are right! Current score: {score}\n")
+OPTION_B = is_the_same(OPTION_A, OPTION_B)
 
-            option_b = random.choice(game_data)
-            print(f"\nCompare A: {option_a['name']}, a {option_a['description']}, from {option_a['country']}\n")
-            print("Vs.\n")
-            print(f"Compare B: {option_b['name']}, a {option_b['description']}, from {option_b['country']}\n")
+print(f"\nCompare A: {OPTION_A['name']}, a {OPTION_A['description']}, from {OPTION_A['country']}\n")
+print("Vs.\n")
+print(f"Compare B: {OPTION_B['name']}, a {OPTION_B['description']}, from {OPTION_B['country']}\n")
+
+def play_game():
+    global OPTION_A, OPTION_B, PLAYER_LIFE, SCORE
+    while PLAYER_LIFE > 0:
+        answer = check_higher(OPTION_A, OPTION_B)
+        player_choice = input("Who has more followers? Type 'A' or 'B': ").lower()
+
+        if player_choice == answer:
+            if player_choice == "a":
+                SCORE += 1
+                print(f"You are right! Current score: {SCORE}\n")
+
+                OPTION_B = random.choice(game_data)
+
+                OPTION_B = is_the_same(OPTION_A, OPTION_B)
+
+                print(f"\nCompare A: {OPTION_A['name']}, a {OPTION_A['description']}, from {OPTION_A['country']}\n")
+                print("Vs.\n")
+                print(f"Compare B: {OPTION_B['name']}, a {OPTION_B['description']}, from {OPTION_B['country']}\n")
+            else:
+                SCORE += 1
+                print(f"You are right! Current score: {SCORE}\n")
+
+                OPTION_A = OPTION_B
+                OPTION_B = random.choice(game_data)
+
+                OPTION_B = is_the_same(OPTION_A, OPTION_B)
+
+                print(f"\nCompare A: {OPTION_A['name']}, a {OPTION_A['description']}, from {OPTION_A['country']}\n")
+                print("Vs.\n")
+                print(f"Compare B: {OPTION_B['name']}, a {OPTION_B['description']}, from {OPTION_B['country']}\n")
         else:
-            score += 1
-            print(f"You are right! Current score: {score}\n")
+            PLAYER_LIFE -= 1
 
-            option_a = option_b
-            option_b = random.choice(game_data)
-            print(f"\nCompare A: {option_a['name']}, a {option_a['description']}, from {option_a['country']}\n")
-            print("Vs.\n")
-            print(f"Compare B: {option_b['name']}, a {option_b['description']}, from {option_b['country']}\n")
-    else:
-        player_life -= 1
-        break
-
-print(f"Sorry, your answer is wrong.\nTotal score: {score}")
-
-    # {
-    #     'name': 'Instagram',
-    #     'follower_count': 346,
-    #     'description': 'Social media platform',
-    #     'country': 'United States'
-    # },
+play_game()
+print(f"Sorry, your answer is wrong.\nTotal score: {SCORE}")
