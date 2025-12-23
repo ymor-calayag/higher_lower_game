@@ -19,11 +19,14 @@ def is_the_same(a, b):
         b = random.choice(game_data)
     return b
 
+def prints_versus(a, b):
+    print(f"\nCompare A: {a['name']}, a {a['description']}, from {a['country']}\n")
+    print("Vs.\n")
+    print(f"Compare B: {b['name']}, a {b['description']}, from {b['country']}\n")
+
 OPTION_B = is_the_same(OPTION_A, OPTION_B)
 
-print(f"\nCompare A: {OPTION_A['name']}, a {OPTION_A['description']}, from {OPTION_A['country']}\n")
-print("Vs.\n")
-print(f"Compare B: {OPTION_B['name']}, a {OPTION_B['description']}, from {OPTION_B['country']}\n")
+prints_versus(OPTION_A, OPTION_B)
 
 def play_game():
     global OPTION_A, OPTION_B, PLAYER_LIFE, SCORE
@@ -40,9 +43,7 @@ def play_game():
 
                 OPTION_B = is_the_same(OPTION_A, OPTION_B)
 
-                print(f"\nCompare A: {OPTION_A['name']}, a {OPTION_A['description']}, from {OPTION_A['country']}\n")
-                print("Vs.\n")
-                print(f"Compare B: {OPTION_B['name']}, a {OPTION_B['description']}, from {OPTION_B['country']}\n")
+                prints_versus(OPTION_A, OPTION_B)
             else:
                 SCORE += 1
                 print(f"You are right! Current score: {SCORE}\n")
@@ -52,9 +53,7 @@ def play_game():
 
                 OPTION_B = is_the_same(OPTION_A, OPTION_B)
 
-                print(f"\nCompare A: {OPTION_A['name']}, a {OPTION_A['description']}, from {OPTION_A['country']}\n")
-                print("Vs.\n")
-                print(f"Compare B: {OPTION_B['name']}, a {OPTION_B['description']}, from {OPTION_B['country']}\n")
+                prints_versus(OPTION_A, OPTION_B)
         else:
             PLAYER_LIFE -= 1
 
